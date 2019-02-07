@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 652ac75012d56c042b272e798a4da188, type: 3}
+  m_Name: Log
+  m_EditorClassIdentifier: 
+  name: Log
+  icon: {fileID: 21300000, guid: 9e23200e1a5109b4193d82a767db8a25, type: 3}
+  itemPrefab: {fileID: 2216142835832521036, guid: 39048e08e72e33846b345a087dc07721,
+    type: 3}
+  isDefaultItem: 0
