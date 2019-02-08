@@ -12,39 +12,42 @@ public class Interactable : MonoBehaviour {
     bool isFocus = false;
     Transform player;
 
-    bool hasInteracted = false;
     public bool repeatedInteraction = false;
 
+    bool inReach = false;
+
+
+    //Create Event for Item Changed
+    public delegate void OnReachChanged();
+    public OnReachChanged onReachChangedCallback;
 
 
 
     //This method is meant to be overwritten (therefore virtual)
     public virtual void Interact() {
         Debug.Log("Interacting with " + gameObject.name);
+        inReach = true;
     }
 
     public virtual void Update() {
-        hasInteracted = true;
-        /*
-        if (isFocus && !hasInteracted) {
+        if (inReach)
+        {
             float distance = Vector3.Distance(player.position, interactionTransform.position);
-            if (distance <= radius) {
-                Interact();
-                hasInteracted = true; 
+            if (distance <= radius)
+            {
+                inReach = false;
             }
-        }*/
+        }
     }
 
     public void OnFocused(Transform playerTransform) {
         isFocus = true;
         player = playerTransform;
-        hasInteracted = false;
     }
 
     public virtual void OnDefocused() {
         isFocus = false;
         player = null;
-        hasInteracted = false;
     }
 
 

@@ -4,65 +4,122 @@ using System.Collections;
 public class Chest : Interactable {
 
     [Range(0.0f, 1.0f)]
-    public float factor;
+    float factor;
+
+    public GameObject bankUI;
 
     Quaternion closedAngle;
     Quaternion openedAngle;
 
     bool closing;
     bool opening;
+    bool neutral = true;
 
-    float speed = 0.8f;
+    public bool chestOpen;
+
+    float speed = 0.95f;
 
     int newAngle = 127;
 
+    float TIME = 5.0f;
+    float timeOpen;
+
     // Use this for initialization
     void Start () {
+
         openedAngle = interactionTransform.rotation;
         closedAngle = Quaternion.Euler(interactionTransform.eulerAngles + Vector3.right * newAngle);
+         timeOpen = TIME;
 
-        if (interactionTransform.rotation == closedAngle)
+        if (chestOpen)
         {
-            closing = true;
-        }
-        if (interactionTransform.rotation == openedAngle)
+            interactionTransform.rotation = Quaternion.Lerp(openedAngle, closedAngle, 0.0f);
+        } else
         {
-            opening = true;
+            Close();
         }
+    }
+
+    void resetTimer()
+    {
+        timeOpen = TIME;
     }
 
 
     public override void Interact()
     {
-        closing = !closing;
-        opening = !opening;
+        if(opening && neutral)
+        {
+                bankUI.SetActive(true);
+        } else
+        {
+            Open();
+        }
     }
 
+    void Open()
+    {
+        neutral = false;
+        opening = true;
+        closing = false;
+        resetTimer();
+    }
+
+    void Close()
+    {
+        neutral = false;
+        opening = false;
+        closing = true;
+    }
 
     // Update is called once per frame
     public override void Update() {
-        base.Update();
 
-        if (closing)
+        if (opening) {
+        timeOpen -= Time.deltaTime;
+        if (timeOpen < 0)
         {
-            factor += speed * Time.deltaTime;
-
-            if (factor > 1.0f)
+            if (!bankUI.activeSelf)
             {
-                factor = 1.0f;
+                Close();
             }
         }
-        if (opening)
-        {
-            factor -= speed * Time.deltaTime;
-
-            if (factor < 0.0f)
-            {
-                factor = 0.0f;
-            }
         }
-        interactionTransform.rotation = Quaternion.Lerp(openedAngle, closedAngle, factor);
+        if (neutral == false)
+        {
+
+            if (closing)
+            {
+                factor += speed * Time.deltaTime;
+
+                if (factor > 1.0f)
+                {
+                    factor = 1.0f;
+                }
+                interactionTransform.rotation = Quaternion.Lerp(openedAngle, closedAngle, factor);
+                
+                if (factor == 1.0f)
+                {
+                    neutral = true;
+                }
+
+            }
+            if (opening)
+            {
+                factor -= speed * Time.deltaTime;
+
+                if (factor < 0.0f)
+                {
+                    factor = 0.0f;
+                }
+                interactionTransform.rotation = Quaternion.Lerp(openedAngle, closedAngle, factor);
+
+                if (factor == 0.0f)
+                {
+                    neutral = true;
+                    bankUI.SetActive(true);
+                }
+            }           
+        }
 	}
-
-
 }
