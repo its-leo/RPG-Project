@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Log
   m_EditorClassIdentifier: 
   name: Log
-  icon: {fileID: 21300000, guid: 9e23200e1a5109b4193d82a767db8a25, type: 3}
+  icon: {fileID: 21300000, guid: bb2d131fb8823a841b11dda45f9a0564, type: 3}
   itemPrefab: {fileID: 2216142835832521036, guid: 39048e08e72e33846b345a087dc07721,
     type: 3}
   isDefaultItem: 0

@@ -20,7 +20,7 @@ public class Interactable : MonoBehaviour {
 
     //This method is meant to be overwritten (therefore virtual)
     public virtual void Interact() {
-        //Debug.Log("Interacting with " + gameObject.name);
+        Debug.Log("Interacting with " + gameObject.name);
     }
 
     public virtual void Update() {
